@@ -105,6 +105,12 @@ export class EventBus {
     const handlers = this.handlers.get(event.type) || [];
     await Promise.all(handlers.map((h) => h(event)));
   }
+
+  unsubscribe(eventType: string, handler: EventHandler): void {
+    const existing = this.handlers.get(eventType);
+    if (!existing) return;
+    this.handlers.set(eventType, existing.filter((h) => h !== handler));
+  }
 }
 
 // === Example: Order Domain ===
