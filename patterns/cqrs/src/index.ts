@@ -46,6 +46,10 @@ export class CommandBus {
     this.handlers.set(commandType, handler as CommandHandler);
   }
 
+  getRegisteredCommands(): string[] {
+    return Array.from(this.handlers.keys());
+  }
+
   async dispatch(command: Command): Promise<CommandResult> {
     const handler = this.handlers.get(command.type);
     if (!handler) {
